@@ -1,24 +1,18 @@
-class Queue{
-	constructor(){
-		this.items = {}
-		this.headIndex = 0
-		this.tailIndex = 0
+class Queue {
+	constructor() {
+			this.items = [];
 	}
-	enqueue(item){
-		this.items[this.tailIndex] = item
-		this.tailIndex++
+	enqueue(item) {
+			this.items.push(item);
 	}
-	dequeue(){
-		const item = this.items[this.headIndex]
-		delete this.items[this.headIndex]
-		this.headIndex++
-		return item	
+	dequeue() {
+			return this.items.shift();
 	}
-	peek(){
-		return this.items[this.headIndex]
+	peek() {
+			return this.items[0];
 	}
 	getLength() {
-		return this.tailIndex - this.headIndex
+			return this.items.length;
 	}
 }
 
@@ -31,7 +25,7 @@ function bfs(x, graph, visited){
 		x = queue.dequeue()
 		for(let y of graph[x]){
 			if(visited[y] === -1){
-				visited[y] = !visited[x] //빨강 <-> 파랑
+				visited[y] = 1 - visited[x]//빨강 <-> 파랑
 				queue.enqueue(y)
 			}
 		}
