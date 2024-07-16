@@ -1,27 +1,3 @@
-class Queue {
-	constructor(){
-		this.items = {}
-		this.headIdx = 0
-		this.tailIdx = 0
-	}
-	enqueue(item){
-		this.items[this.tailIdx] = item
-		this.tailIdx++
-	}
-	dequeue(){
-		const item = this.items[this.headIdx]
-		delete this.items[this.headIdx]
-		this.headIdx++
-		return item
-	}
-	peek() {
-		return this.items[this.headIdx]
-	}
-	getLength() {
-		return this.tailIdx - this.headIdx
-	}
-}
-
 const input = require("fs").readFileSync("/dev/stdin").toString().trim().split("\n")
 
 const [n, m] = input.shift().split(" ").map(Number)
@@ -36,17 +12,16 @@ function possible(row, col){
 }
 
 function bfs(row, col){
-	let q = new Queue()
-	q.enqueue([row, col])
+	let q = [[row,col]]
 	let size = 1
-	while(q.getLength() !== 0){
-		let [curRow,curCol] = q.dequeue()
+	while(q.length !== 0){
+		let [curRow,curCol] = q.shift()
 		for(let [dirRow, dirCol] of directions){
 			const nextRow = dirRow + curRow
 			const nextCol = dirCol + curCol
 			if(possible(nextRow, nextCol) && board[nextRow][nextCol] === 1 && !visited[nextRow][nextCol]){
 				visited[nextRow][nextCol] = true
-				q.enqueue([nextRow, nextCol])
+				q.push([nextRow, nextCol])
 				size++
 			}
 		}
