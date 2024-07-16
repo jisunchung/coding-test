@@ -20,7 +20,22 @@ while(q.length !== 0){
 		break
 	}
 	for(let oper of ["*", "+", "-", "/"]){
-		let next = eval(v+oper+v)
+		let next = v
+		switch (oper) {
+				case "*":
+						next *= v;
+						break;
+				case "+":
+						next += v;
+						break;
+				case "-":
+						next -= v;
+						break;
+				case "/":
+						if (v !== 0) {
+								next /= v;
+						}
+		}
 		if(visited.has(next)) continue
 		visited.add(next)
 		q.push([next, opers+oper])
