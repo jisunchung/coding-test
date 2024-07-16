@@ -2,6 +2,7 @@ const input = require("fs").readFileSync("/dev/stdin").toString().trim().split("
 
 const [n, m] = input.shift().split(" ").map(Number)
 const board = input.map(val => val.split(" ").map(Number))
+const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]
 
 function possible(row, col){
 	return row >= 0 && row < n && col >= 0 && col < m
@@ -13,7 +14,7 @@ function bfs(row, col){
 	let size = 1
 	while(q.length !== 0){
 		let [curRow, curCol] = q.shift()
-		for(let [dirRow, dirCol] of [[-1, 0], [1, 0], [0, -1], [0, 1]]){
+		for(let [dirRow, dirCol] of directions){
 			const nextRow = dirRow + curRow
 			const nextCol = dirCol + curCol
 			if(possible(nextRow, nextCol) && board[nextRow][nextCol] === 1){
