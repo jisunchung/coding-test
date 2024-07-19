@@ -14,11 +14,12 @@ for(let i = 1; i <= M; i++){
 
 let visited = new Set([1])
 let q = []
+let front = 0
 q.push([1,1]) // 노드, 거리
 let found = false
 
-while(q.length !== 0){
-	let [node, dis] = q.shift()
+while(front < q.length){
+	let [node, dis] = q[front++]
 	if(node === N){
 		console.log(Math.floor(dis/2)+1)
 		found = true
