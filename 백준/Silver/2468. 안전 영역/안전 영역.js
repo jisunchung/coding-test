@@ -6,7 +6,6 @@ const input = require("fs")
 
 const N = Number(input.shift());
 const board = input.map((val) => val.split(" ").map(Number));
-let min = 100;
 let max = 1;
 let maxResult = 0
 
@@ -25,7 +24,7 @@ for(let target = 0; target <= max; target++){
 	}
 
 
-	function bfs(col, row){
+	const bfs = (col, row) => {
 		let q = [[col, row]]
 		area[col][row] = 0
 		while(q.length !== 0){
