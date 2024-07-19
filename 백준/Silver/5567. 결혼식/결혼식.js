@@ -15,9 +15,10 @@ for(let i = 0 ; i < m ; i++){
 
 let result = 0
 let q = []
+let front = 0
 q.push([1,0]) //start, count
-while(q.length !== 0){
-	let [now, count] = q.shift()
+while(front < q.length){
+	let [now, count] = q[front++]
 	if(count === 2) break
 	for(let next of graph[now]){
 		if(!visited[next]){ //친구의 친구인 경우까지만 
