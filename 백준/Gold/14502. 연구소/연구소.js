@@ -14,10 +14,12 @@ const directions = [
 ];
 let maxResult = 0;
 let virusPositions = [];
+let emptyPositions = []
 
 for (let i = 0; i < N; i++) {
 	for (let j = 0; j < M; j++) {
 		if (board[i][j] === 2) virusPositions.push([i, j]);
+		if (board[i][j] === 0) emptyPositions.push([i, j]);
 	}
 }
 
@@ -45,21 +47,18 @@ function bfs(arr) {
 	return count;
 }
 
-function dfs(count) {
+function dfs(count, start) {
 	if (count === 3) {
 		let wallArr = board.map((v) => [...v]);
 		maxResult = Math.max(maxResult, bfs(wallArr));
 		return;
 	}
-	for (let i = 0; i < N; i++) {
-		for (let j = 0; j < M; j++) {
-			if (board[i][j] === 0) {
-				board[i][j] = 1;
-				dfs(count + 1);
-				board[i][j] = 0;
-			}
-		}
+	for(let i = start; i < emptyPositions.length; i++){
+		const [r, c] = emptyPositions[i];
+		board[r][c] = 1;
+		dfs(count + 1, i+1);
+		board[r][c] = 0;
 	}
 }
-dfs(0);
+dfs(0 , 0);
 console.log(maxResult);
