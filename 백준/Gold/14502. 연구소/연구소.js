@@ -5,23 +5,22 @@ const input = require("fs")
 	.split("\n");
 
 const [N, M] = input.shift().split(" ").map(Number);
-const board = input.map((val) => val.split(" ").map(Number));
+let virusPositions = [];
+let emptyPositions = []
 const directions = [
 	[-1, 0],
 	[1, 0],
 	[0, -1],
 	[0, 1],
 ];
-let maxResult = 0;
-let virusPositions = [];
-let emptyPositions = []
+const board = input.map((row, i) => row.split(" ").map((col, j) => {
+	const tmp = Number(col)
+	if (tmp === 2) virusPositions.push([i, j]);
+	if (tmp === 0) emptyPositions.push([i, j]);
+	return tmp
+}));
 
-for (let i = 0; i < N; i++) {
-	for (let j = 0; j < M; j++) {
-		if (board[i][j] === 2) virusPositions.push([i, j]);
-		if (board[i][j] === 0) emptyPositions.push([i, j]);
-	}
-}
+let maxResult = 0;
 
 function bfs(arr) {
 	let q = [...virusPositions];
