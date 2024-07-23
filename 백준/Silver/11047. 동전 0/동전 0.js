@@ -1,17 +1,11 @@
 const input = require("fs").readFileSync("/dev/stdin").toString().trim().split('\n')
 
-const [N, K] = input.shift().split(" ").map(Number)
+let [N, K] = input.shift().split(" ").map(Number)
 const arr = input.map(Number)
-
 let count = 0
-let target = K
 
-for(let i = arr.length; i > -1; i--){
-	if(arr[i] <= target){
-		let tmp = Math.floor(target/arr[i])
-		count += tmp
-		target -= (tmp * arr[i])
-	}
+for(let i = arr.length-1; i > -1; i--){
+	count += Math.floor(K/arr[i])
+	K %= arr[i]
 }
-
 console.log(count)
