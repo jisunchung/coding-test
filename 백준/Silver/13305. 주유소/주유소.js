@@ -1,14 +1,14 @@
 const input = require("fs").readFileSync("/dev/stdin").toString().trim().split(/\n/)
 
 const n = Number(input[0])
-const dis = input[1].split(" ").map(Number)
-const price = input[2].split(" ").map(Number)
+const dis = input[1].split(" ").map(v => BigInt(v))
+const price = input[2].split(" ").map(v => BigInt(v))
 
-let result = dis[0]*price[0]
+let result = 0n
 let minPrice = price[0]
 
-for(let i = 1; i < n-1; i++){
-	if(price[i] < minPrice) minPrice = price[i]
-	result += minPrice*dis[i]
+for(let i = 0; i < n-1; i++){
+	result += minPrice * dis[i]
+	if(price[i+1] < minPrice) minPrice = price[i+1]
 }
-console.log(result)
+console.log(String(result))
