@@ -7,7 +7,7 @@ const input = require("fs")
 const N = Number(input[0]);
 const arr = input[1].split(" ").map(Number);
 
-const arrow = new Array(Math.max(...arr) + 1).fill(0);
+const arrow = new Array(1000001).fill(0);
 let result = 0;
 
 for (let x of arr) {
