@@ -6,7 +6,7 @@ let start = 0
 
 while (queue.length) {
     start += K-1
-	if(start >= queue.length) start %= queue.length
-	result.push(queue.splice(start,1))
+	start %= queue.length
+	result.push(queue.splice(start,1)[0])
 }
 console.log(`<${result.join(", ")}>`)
