@@ -1,8 +1,8 @@
 const input = require('fs').readFileSync('/dev/stdin').toString().trim();
 
-function calculateValue(input) {
+function calculateValue() {
 		let stack = [];
-		let temp = 1;
+		let tmp = 1;
 		let result = 0;
 
 		for (let i = 0; i < input.length; i++) {
@@ -10,28 +10,28 @@ function calculateValue(input) {
 
 				if (char === '(') {
 						stack.push(char);
-						temp *= 2;
+						tmp *= 2;
 				} else if (char === '[') {
 						stack.push(char);
-						temp *= 3;
+						tmp *= 3;
 				} else if (char === ')') {
 						if (stack.length === 0 || stack[stack.length - 1] !== '(') {
 								return 0;
 						}
 						if (input[i - 1] === '(') {
-								result += temp;
+								result += tmp;
 						}
 						stack.pop();
-						temp /= 2;
+						tmp /= 2;
 				} else if (char === ']') {
 						if (stack.length === 0 || stack[stack.length - 1] !== '[') {
 								return 0;
 						}
 						if (input[i - 1] === '[') {
-								result += temp;
+								result += tmp;
 						}
 						stack.pop();
-						temp /= 3;
+						tmp /= 3;
 				}
 		}
 
@@ -42,4 +42,4 @@ function calculateValue(input) {
 		return result;
 }
 
-console.log(calculateValue(input));
+console.log(calculateValue());
