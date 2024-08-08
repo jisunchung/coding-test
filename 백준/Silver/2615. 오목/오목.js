@@ -1,44 +1,44 @@
 const input = require('fs').readFileSync('/dev/stdin').toString().trim().split("\n")
-
 const board = input.map(val => val.split(" ").map(Number))
 
-function checkWinner(board, x, y, color) {
-	const directions = [
-			{dx: 0, dy: 1},  // →
-			{dx: 1, dy: 0},  // ↓
-			{dx: 1, dy: 1},  // ↘
-			{dx: -1, dy: 1}  // ↗
-	];
+function isValid(x, y) {
+	return x >= 0 && x < 19 && y >= 0 && y < 19;
+}
 
-	for (let dir of directions) {
+function checkWinner(row, col, color) {
+	const dir = [[0,1],[1,0],[1,1],[-1,1]] //→ ↓ ↘ ↗
+
+	for (let [dr, dc] of dir) {
 			let count = 1;
 			for (let i = 1; i < 5; i++) {
-					const nx = x + dir.dx * i;
-					const ny = y + dir.dy * i;
-					if (nx >= 0 && nx < 19 && ny >= 0 && ny < 19 && board[nx][ny] === color) {
+					const nx = row + dr * i;
+					const ny = col + dc * i;
+					if (isValid(nx, ny) && board[nx][ny] === color) {
 							count++;
-					} else {
-							break;
-					}
+					} else break
 			}
+			//양끝이 같은 색이 있는지 확인
 			if (count === 5) {
-					if (x - dir.dx >= 0 && x - dir.dx < 19 && y - dir.dy >= 0 && y - dir.dy < 19 && board[x - dir.dx][y - dir.dy] === color) continue;
-					if (x + dir.dx * 5 >= 0 && x + dir.dx * 5 < 19 && y + dir.dy * 5 >= 0 && y + dir.dy * 5 < 19 && board[x + dir.dx * 5][y + dir.dy * 5] === color) continue;
-					return true;
+					const prevX = row - dr;
+					const prevY = col - dc;
+					const nextX = row + dr * 5;
+					const nextY = col + dc * 5;
+
+					if (!(isValid(prevX, prevY) && board[prevX][prevY] === color) && !(isValid(nextX, nextY) && board[nextX][nextY] === color)) {
+							return true;
+					}
 			}
 	}
 	return false;
 }
 
 function main() {
-
-
 	for (let x = 0; x < 19; x++) {
 			for (let y = 0; y < 19; y++) {
 					if (board[x][y] !== 0) {
-							if (checkWinner(board, x, y, board[x][y])) {
+							if (checkWinner(x, y, board[x][y])) {
 									console.log(board[x][y]);
-									console.log((x + 1) + ' ' + (y + 1));
+									console.log(`${x+1} ${y+1}`);
 									return;
 							}
 					}
@@ -47,5 +47,4 @@ function main() {
 	console.log(0);
 }
 
-main()
-
+main();
