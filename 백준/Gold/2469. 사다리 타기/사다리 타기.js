@@ -1,48 +1,43 @@
-const fs = require('fs');
-const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n');
 
-const K = parseInt(input[0]);
-const N = parseInt(input[1]);
+const K = Number(input[0]);
+const N = Number(input[1]);
 
-const final = input[2].split('');
+const finalResult = input[2].split('');
 const ladder = input.slice(3);
 
-let topResult = Array.from({ length: K }, (_, i) => String.fromCharCode(65 + i)); // A, B, C, ...
-let bottomResult = final.slice();
+let participants = Array.from({ length: K }, (_, i) => String.fromCharCode(65 + i));
+let questionIndex = ladder.findIndex(val => val.includes('?'));
 
-// ?의 위치 찾기
-let questionIndex = ladder.findIndex(line => line.includes('?'));
-
-// 위에서 ?까지 시뮬레이션
+// 위에서 ?까지 계산
 for (let i = 0; i < questionIndex; i++) {
-    for (let j = 0; j < K - 1; j++) {
-        if (ladder[i][j] === '-') {
-            [topResult[j], topResult[j + 1]] = [topResult[j + 1], topResult[j]];
-        }
-    }
+		for (let j = 0; j < K - 1; j++) {
+				if (ladder[i][j] === '-') {
+						[participants[j], participants[j + 1]] = [participants[j + 1], participants[j]];
+				}
+		}
 }
 
-// 아래에서 ?까지 시뮬레이션
+// 아래에서 ?까지 계산
 for (let i = N - 1; i > questionIndex; i--) {
-    for (let j = 0; j < K - 1; j++) {
-        if (ladder[i][j] === '-') {
-            [bottomResult[j], bottomResult[j + 1]] = [bottomResult[j + 1], bottomResult[j]];
-        }
-    }
+		for (let j = 0; j < K - 1; j++) {
+				if (ladder[i][j] === '-') {
+						[finalResult[j], finalResult[j + 1]] = [finalResult[j + 1], finalResult[j]];
+				}
+		}
 }
 
-// ?에 들어갈 사다리 계산
 let result = '';
 for (let i = 0; i < K - 1; i++) {
-    if (topResult[i] === bottomResult[i]) {
-        result += '*';
-    } else if (topResult[i] === bottomResult[i + 1] && topResult[i + 1] === bottomResult[i]) {
-        result += '-';
-        [topResult[i], topResult[i + 1]] = [topResult[i + 1], topResult[i]]; // 스왑
-    } else {
-        result = 'x'.repeat(K - 1); // 불가능한 경우
-        break;
-    }
+		if (participants[i] === finalResult[i]) {
+				result += '*';
+		} else if (participants[i] === finalResult[i + 1] && participants[i + 1] === finalResult[i]) {
+				result += '-';
+				[participants[i], participants[i + 1]] = [participants[i + 1], participants[i]]; 
+		} else {
+				result = 'x'.repeat(K - 1); 
+				break;
+		}
 }
 
 console.log(result);
