@@ -19,13 +19,13 @@ for (let i = 1; i <= N; i++) {
 	}
 }
 
-let result = ""
+let result = []
 for (let [i, j, x, y] of queries) {
 	let tmp =
 		prefixSum[x][y] -
 		prefixSum[i - 1][y] -
 		prefixSum[x][j - 1] +
 		prefixSum[i - 1][j - 1];
-	result += tmp + "\n";
+	result.push(tmp)
 }
-console.log(result)
+console.log(result.join("\n"))
