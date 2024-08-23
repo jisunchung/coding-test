@@ -1,7 +1,12 @@
-const input = require("fs").readFileSync("/dev/stdin").toString().trim()
+let input = require("fs").readFileSync("/dev/stdin").toString().trim()
 
-const alpha = /c\=|c\-|dz\=|d\-|lj|nj|s\=|z\=/g
+const alpha = ["c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z="]
 
-const result = input.replace(alpha, "A")
+for(target of alpha) input = input.replaceAll(target, "A")
 
-console.log(result.length)
+console.log(input.length)
+
+
+
+
+
