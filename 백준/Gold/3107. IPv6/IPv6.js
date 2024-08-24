@@ -4,8 +4,7 @@ const parts = input.split('::');
 const leftPart = parts[0] ? parts[0].split(':') : [];
 const rightPart = parts[1] ? parts[1].split(':') : [];
 
-const needLength  = 8 - (leftPart.length + rightPart.length);
-const middlePart = new Array(needLength).fill('0000');
+const middlePart = new Array(8 - (leftPart.length + rightPart.length)).fill('0000');
 
 let fullAddress = [...leftPart, ...middlePart, ...rightPart];
 
