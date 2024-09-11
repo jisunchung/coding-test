@@ -1,22 +1,22 @@
-const input = require("fs").readFileSync("/dev/stdin").toString().trim().split(/\n/)
+const [N, M, ...arr] = require("fs").readFileSync("/dev/stdin").toString().trim().split(/\s/).map(Number)
 
-const [N, M] =input[0].split(' ').map(Number)
-const arr = input[1].split(' ').map(Number).sort((a,b) => a-b)
+arr.sort((a,b) => a-b)
+const result = []
+let answer = ""
 
-let result = []
-let answer = new Set()
+function dfs(depth, start){
+	if(depth === M) return answer+= result.join(" ") + "\n"
 
-function dfs(depth){
-	if(depth === M){
-		answer.add(result.join(' '))
-		return
-	}
-	for(let i = 0 ; i < N; i++){
-		if(result[depth-1] > arr[i]) continue
-			result.push(arr[i])
-			dfs(depth+1)
-			result.pop()
+	let before = 0
+	for(let i = start; i < N; i++){
+		if(arr[i] === before) continue
+		result.push(arr[i])
+		before = arr[i]
+		dfs(depth+1, i)
+		result.pop()
 	}
 }
-dfs(0)
-console.log([...answer].join("\n"))
+
+dfs(0, 0)
+console.log(answer)
+
