@@ -1,19 +1,15 @@
-let n = require("fs").readFileSync("/dev/stdin").toString().trim();
+const input = require("fs")
+	.readFileSync("/dev/stdin")
+	.toString()
+	.trim()
 
-let arr = Array(10).fill(0);
-let count = 0
+const tmp = {}
 
-for (let i = 0; i < n.length; i++) {
-	if(n[i] === '9' || n[i] === '6'){
-		count++
-	}else{
-		arr[n[i]]++;
-	}
+for(c of input){
+	if(c === "6" || c === "9") tmp["6"] = (tmp["6"] || 0) + 1
+	else tmp[c] = (tmp[c] || 0) + 1
 }
+if(tmp["6"]) tmp["6"] = Math.round(tmp["6"]/2)
 
-const arrMax = Math.max(...arr)
-if(arrMax >= Math.ceil(count/2)){
-	console.log(arrMax)
-}else{
-	console.log(Math.ceil(count/2))
-}
+console.log(Math.max(...Object.values(tmp)))
+
