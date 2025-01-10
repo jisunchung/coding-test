@@ -1,9 +1,9 @@
-//~4
-//k 최상품 점수, P 최하품 점수 , 한상자의 가격은 p * m(m 개씩 포장) 
 function solution(k, m, score) {
-    let answer = 0;
-    score.sort()
-
+    if(score.length < m){
+        return 0;
+    }
+    let answer = 0
+    score.sort((a,b) => a-b)
     while(score.length >= m){
        answer += Math.min(...score.splice(-m)) * m
     }
