@@ -1,11 +1,11 @@
 function solution(s){
     const stack = []
-    for(const target of s){
-        if(target === "(") stack.push(target)
+    
+    for(const c of s){
+        if(c === "(") stack.push(c)
         else{
-            const v = stack.pop()
-            if(v !== "(") return false
+            if(stack.length === 0 || "(" !== stack.pop()) return false
         }
     }
-    return stack.length === 0 ? true : false
+    return stack.length === 0
 }
