@@ -1,17 +1,21 @@
 function solution(progresses, speeds) {
-    const answer = [];
-    const days = progresses.map((val, idx) => Math.ceil((100-val) / speeds[idx]))
-    let release = days[0]
-    let num = 0
-    for(let i = 0 ; i < days.length; i++){
-        if(days[i] <= release){
-            num++
-        }else{
-            answer.push(num)
-            num = 1
-            release = days[i]
-        }  
+  const days = progresses.map((p, i) => Math.ceil((100 - p) / speeds[i]));
+  const stack = [];
+
+  let result = [];
+
+  while (days.length) {
+    let current = days.shift(); // stack의 top처럼 사용
+    let count = 1;
+
+    // stack처럼 앞으로 배포 가능한 것들을 pop
+    while (days.length && days[0] <= current) {
+      days.shift();
+      count++;
     }
-    answer.push(num)
-    return answer;
+
+    result.push(count);
+  }
+
+  return result;
 }
