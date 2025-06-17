@@ -1,10 +1,8 @@
 function solution(arr)
 {
-    const answer = [];
-    
-    for(const num of arr){
-        if(answer[answer.length -1] !== num) answer.push(num)
+    const res = []
+    for(const val of arr){
+        if(res[res.length -1] !== val) res.push(val)
     }
-    
-    return answer;
+    return res
 }
