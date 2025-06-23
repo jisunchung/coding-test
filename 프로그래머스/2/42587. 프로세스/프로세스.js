@@ -1,17 +1,15 @@
 function solution(priorities, location) {
-    const q = []
-    let count = 0
-    for(let i = 0; i < priorities.length; i++){
-        q.push([i, priorities[i]])
-    }
-    while(q.length > 0){
+    let res = 0;
+    
+    const q = priorities.map((val,idx) => [idx, val])
+    
+    while(q.length){
         const curr = q.shift()
         
-        if(q.some(task => task[1] > curr[1])){
-            q.push(curr)
-        }else{
-            count++
-            if(curr[0] === location) return count
+        if(q.some(val => val[1] > curr[1])) q.push(curr)
+        else{
+            res++
+            if(location === curr[0]) return res
         }
     }
 }
